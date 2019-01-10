@@ -46,10 +46,18 @@ namespace SandlerRanchMovies.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Genre,Price,Desciption")] Movie movie)
+        public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Genre,Price,Desciption,ImagePath")] Movie movie, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null)
+                {
+                    
+                    file.SaveAs(HttpContext.Server.MapPath("~/Images/") + file.FileName);
+                    movie.ImagePath = file.FileName;
+
+                }
+
                 db.Movies.Add(movie);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -57,6 +65,10 @@ namespace SandlerRanchMovies.Controllers
 
             return View(movie);
         }
+
+
+    
+        
 
         // GET: Movies/Edit/5
         public ActionResult Edit(int? id)
@@ -103,6 +115,8 @@ namespace SandlerRanchMovies.Controllers
             }
             return View(movie);
         }
+
+
 
         // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
