@@ -13,6 +13,7 @@ namespace SandlerRanchMovies.Models
         public string Genre { get; set; }
         public decimal Price { get; set; }
         public string Desciption { get; set; }
+        public string ImagePath { get; set; }
     }
     /* MovieDBContext class represents the Entity Framework movie database context, 
      * which handles fetching, storing, and updating Movie class instances in a database*/
